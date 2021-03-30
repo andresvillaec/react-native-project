@@ -1,4 +1,4 @@
-import { GET_DECKS, CREATE_DECK } from '../actions'
+import { GET_DECKS, CREATE_DECK } from '../actions/deck'
 
 function entries (state = {}, action) {
   switch (action.type) {

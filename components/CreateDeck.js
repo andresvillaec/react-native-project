@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { View, Text } from 'react-native';
 
 function mapStateToProps(state) {
   return {
@@ -10,9 +11,11 @@ function mapStateToProps(state) {
 class CreateDeck extends Component {
   render() {
     return (
-      <div>
-        Create Deck
-      </div>
+      <View style={{flex:1}}>
+        <Text>
+          Create Deck
+        </Text>
+      </View>
     );
   }
 }
