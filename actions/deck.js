@@ -16,9 +16,9 @@ export function createDecks (deck) {
   }
 }
 
-export function deleteDecks (id) {
+export function deleteDeck (id) {
   return {
     type: DELETE_DECK,
-    
+    id
   }
 }
