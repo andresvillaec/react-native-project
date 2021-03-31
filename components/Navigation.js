@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import CreateDeck from './CreateDeck'
 import DeckList from './DeckList'
 import DeckItem from './DeckItem'
+import { connect } from 'react-redux';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -9,7 +10,6 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { createStackNavigator } from '@react-navigation/stack';
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { white, purple } from '../utils/colors'
-import Constants from 'expo-constants'
 
 // Config for TabNav
 const RouteConfigs = {
@@ -73,7 +73,7 @@ const StackConfig = {
     name: "DeckItem",
     component: DeckItem,
     options: {
-      title: 'Deck Detail',
+      title: 'udacicards',
       headerTintColor: white,
       headerStyle:{
         backgroundColor: purple
@@ -100,9 +100,9 @@ const MainNav = () =>(
   </Stack.Navigator>
 )
 
-
-export default class Navigation extends Component {
+class Navigation extends Component {
   render() {
+    console.log(this.props)
     return (
       <NavigationContainer >
         <MainNav />
@@ -110,3 +110,9 @@ export default class Navigation extends Component {
     )
   }
 }
+
+function mapDispatchToProps() {
+  return {
+  };
+}
+export default connect(null, mapDispatchToProps)(Navigation);

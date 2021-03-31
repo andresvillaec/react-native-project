@@ -1,28 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { white, purple } from '../utils/colors'
-import DeckItem from './DeckItem'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import {loadInitialDecks} from '../utils/api'
 
-function mapStateToProps({ decks }) {
+function mapStateToProps({decks}) {
   return {
-    decks
-  };
-}
-
-class DeckList extends Component {
-
-  submit = (deck) => {
-    this.props.navigation.navigate("DeckItem", {
-      title: deck.title,
-      navigation: this.props.navigation
-    });
-  }
-
-  render() {
-    const {navigation} = this.props
-
-    const decks = {
+    loadInitialDecks,
+    decks : {
       React: {
           title: 'React',
           questions: [
@@ -45,7 +29,28 @@ class DeckList extends Component {
               }
           ]
       }
-    }
+  }
+  };
+}
+
+class DeckList extends Component {
+  submit = (deck) => {
+    this.props.navigation.navigate("DeckItem", {
+      title: deck.title,
+      navigation: this.props.navigation
+    });
+  }
+
+  componentDidMount() {
+    const { loadInitialDecks } = this.props;
+
+    loadInitialDecks();
+  }
+
+  render() {
+    const {decks} = this.props
+    console.log(decks)
+    console.log(this.props)
 
     return (
       <View style={styles.container}>
