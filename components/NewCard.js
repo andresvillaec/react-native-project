@@ -1,28 +1,14 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import { Text, StyleSheet, View } from 'react-native'
 
-export class NewCard extends Component {
-  static propTypes = {
-    prop: PropTypes
-  }
-
+export default class NewCard extends Component {
   render() {
     return (
       <View>
-        <Text> prop </Text>
+        <Text> textInComponent </Text>
       </View>
     )
   }
 }
 
-const mapStateToProps = (state) => ({
-  
-})
-
-const mapDispatchToProps = {
-  
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(NewCard)
+const styles = StyleSheet.create({})
