@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, StyleSheet} from 'react-native'
 import TextInput from '../elements/TextInput'
-import Button from '../elements/Button'
+import SubmitButton from '../elements/SubmitButton'
 
 export default class AddCard extends Component {
   state = {
@@ -36,7 +36,7 @@ export default class AddCard extends Component {
           onChangeText ={this.onChangeTextAnswer}
           value = {answer}
         />
-        <Button 
+        <SubmitButton 
           onPress={this.addCard} 
           Name='Add Card' 
         />

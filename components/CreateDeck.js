@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { white, purple } from '../utils/colors'
 import {handleCreateDeck} from '../actions/deck'
-import Button from '../elements/Button'
+import SubmitButton from '../elements/SubmitButton'
 
 function mapStateToProps(state) {
   return {
@@ -43,7 +43,7 @@ class CreateDeck extends Component {
           />
         </View> 
         <View style={styles.box}>
-          <Button onPress={this.submit} Name='Create Deck' />
+          <SubmitButton onPress={this.submit} />
         </View>
       </View>
     );

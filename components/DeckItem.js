@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Button } from 'react-native'
 import { connect } from 'react-redux'
-import { gray, black, purple, white } from '../utils/colors'
-import Button from '../elements/Button'
+import { gray, black, white, red } from '../utils/colors'
+import SubmitButton from '../elements/SubmitButton'
 
 export class DeckItem extends Component {
   addCard = () => {
@@ -13,12 +13,11 @@ export class DeckItem extends Component {
   }
 
   startQuiz = () => {
-    const {title} = this.state
-    const {navigation, dispatch} = this.props
-    console.log(this.props)
-    dispatch(handleCreateDeck(title))
-    navigation.goBack()
-    
+    //TODO: Go to quiz
+  }
+
+  deleteDeck = () => {
+    //TODO: Delete deck
   }
 
   render() {
@@ -30,9 +29,9 @@ export class DeckItem extends Component {
       <View style={styles.container}>
         <Text style={styles.titleText}>{deck.title}</Text>
         <Text style={styles.subtitleText}>{deck.questions.length} cards</Text>
-        <Button customStyles={styles.secondaryButton} onPress={this.addCard} Name='Add Card' />
-        <Button onPress={this.startQuiz} Name='Start Quiz' />
-
+        <SubmitButton customStyles={styles.secondaryButton} onPress={this.addCard} Name='Add Card' />
+        <SubmitButton onPress={this.startQuiz} Name='Start Quiz' />
+        <SubmitButton customStyles={styles.secondaryButton} onPress={this.deleteDeck} Name='Delete deck' />
       </View>
     )
   }
@@ -80,6 +79,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     backgroundColor: white,
     color:black,
+  },
+  deleteButton :{
+    backgroundColor: white,
+    color:red,
+    marginTop: 50,
   }
 
 });
