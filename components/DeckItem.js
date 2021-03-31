@@ -6,12 +6,10 @@ import Button from '../elements/Button'
 
 export class DeckItem extends Component {
   addCard = () => {
-    const {title} = this.state
-    const {navigation, dispatch} = this.props
-    console.log(this.props)
-    dispatch(handleCreateDeck(title))
-    navigation.goBack()
-    
+    this.props.navigation.navigate("AddCard", {
+      title: 'React',
+      navigation: this.props.navigation
+    });
   }
 
   startQuiz = () => {

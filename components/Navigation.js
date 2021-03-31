@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import CreateDeck from './CreateDeck'
 import DeckList from './DeckList'
 import DeckItem from './DeckItem'
+import AddCard from './AddCard'
 import { connect } from 'react-redux';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -88,8 +89,18 @@ const StackConfig = {
       headerStyle:{
         backgroundColor: purple
       }
+    },
+  },
+  AddCard:{
+    name: "AddCard",
+    component: AddCard,
+    options: {
+      headerTintColor: white,
+      headerStyle:{
+        backgroundColor: purple
+      }
     }
-  }
+  },
 }
 const Stack = createStackNavigator();
 const MainNav = () =>(
@@ -97,6 +108,7 @@ const MainNav = () =>(
     <Stack.Screen {...StackConfig['TabNav']} />
     <Stack.Screen {...StackConfig['DeckItem']} />
     <Stack.Screen {...StackConfig['CreateDeck']} />
+    <Stack.Screen {...StackConfig['AddCard']} />
   </Stack.Navigator>
 )
 
