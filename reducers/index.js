@@ -1,6 +1,6 @@
 import { GET_DECKS, CREATE_DECK } from '../actions/deck'
 
-function entries (state = {}, action) {
+function decks (state = {}, action) {
   switch (action.type) {
     case GET_DECKS :
       return {
@@ -8,13 +8,18 @@ function entries (state = {}, action) {
         ...action.decks,
       }
     case CREATE_DECK :
+      const { title } = action;
+      console.log(state)
       return {
         ...state,
-        ...action.deck
-      }
+        [title]: {
+          title,
+          questions: []
+        }
+      };
     default :
       return state
   }
 }
 
-export default entries
+export default decks

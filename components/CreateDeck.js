@@ -3,26 +3,36 @@ import { connect } from 'react-redux';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { white, purple } from '../utils/colors'
+import {handleCreateDeck} from '../actions/deck'
+
+function mapStateToProps(state) {
+  return {
+
+  };
+}
 
 function SubmitBtn ({ onPress }) {
   return (
     <TouchableOpacity
       style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn}
       onPress={onPress}>
-        <Text style={styles.submitBtnText}>Submit</Text>
+        <Text style={styles.submitBtnText}>Create Deck</Text>
     </TouchableOpacity>
   )
 }
 
-export default class CreateDeck extends Component {
+class CreateDeck extends Component {
   state = {
     title: ''
   }
 
   submit = (e) => {
     const {title} = this.state
-    const {navigation} = this.props
+    const {navigation, dispatch} = this.props
+    console.log(this.props)
+    dispatch(handleCreateDeck(title))
     navigation.goBack()
+    
   }
 
   render() {
@@ -38,6 +48,7 @@ export default class CreateDeck extends Component {
           <TextInput
             style={styles.input}
             value={title}
+            placeholder='Deck Title'
             onChangeText={(text) => this.setState({title: text})}
           />
         </View> 
@@ -69,7 +80,7 @@ const styles = StyleSheet.create({
     backgroundColor: white,
     padding:10,
     borderRadius: 5,
-    fontSize: 15,
+    fontSize: 20,
     height: 50,
     marginBottom: 20
   },
@@ -100,3 +111,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
+export default connect(
+  mapStateToProps,
+)(CreateDeck);
