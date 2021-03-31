@@ -1,12 +1,24 @@
 import React, { Component } from 'react'
-import { Text, View } from 'react-native'
+import { View, Text } from 'react-native'
+import { connect } from 'react-redux'
 
-export default class DeckItem extends Component {
+export class DeckItem extends Component {
   render() {
+    // console.log(this.props)
+    const {route} = this.props
+    const {params} = route
+    const {title} = params
+
     return (
       <View>
-        <Text> Deck Item </Text>
+        <Text> {title} </Text>
       </View>
     )
   }
 }
+
+const mapStateToProps = (state) => ({
+  
+})
+
+export default connect(mapStateToProps)(DeckItem)
