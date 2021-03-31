@@ -15,6 +15,7 @@ import { white, purple } from './utils/colors'
 import Constants from 'expo-constants'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
+import middleware from './middleware'
 import reducer from './reducers'
 
 function CustomStatusBar ({backgroundColor, ...props}){
@@ -29,12 +30,12 @@ const RouteConfigs = {
   DeckList:{
     name: "DeckList",
     component: DeckList,
-    options: {tabBarIcon: ({tintColor}) => <Ionicons name='ios-bookmarks' size={30} color={tintColor} />, title: 'Decks'}
+    options: {tabBarIcon: ({tintColor}) => <Ionicons name='ios-bookmarks' size={30} color={purple} />, title: 'Decks'}
   }, 
   CreateDeck:{
     component: CreateDeck,
     name: "Add Deck",
-    options: {tabBarIcon: ({tintColor}) => <FontAwesome name='plus-square' size={30} color={tintColor} />, title: 'Add Deck'}
+    options: {tabBarIcon: ({tintColor}) => <FontAwesome name='plus-square' size={30} color={purple} />, title: 'Add Deck'}
   },
 }
 
@@ -77,12 +78,16 @@ const StackConfig = {
   TabNav:{
     name: "Home",
     component: TabNav,
-    options: {headerShown: false}
+    options: {
+      title: 'Decks',
+      headerShown: false,
+    }
   }, 
   DeckItem:{
     name: "DeckItem",
     component: DeckItem,
     options: {
+      title: 'Deck Detail',
       headerTintColor: white,
       headerStyle:{
         backgroundColor: purple
@@ -111,7 +116,7 @@ const MainNav = () =>(
 
 export default class App extends React.Component{
   render(){
-    const store = createStore(reducer)
+    const store = createStore(reducer, middleware)
     return(
       <Provider store={store}>
         <CustomStatusBar backgroundColor={purple} barStyle='light-content' />
