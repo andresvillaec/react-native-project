@@ -6,6 +6,8 @@ import DeckList from './components/DeckList'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import SafeAreaView from 'react-native-safe-area-view';
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { white, purple } from './utils/colors'
 import { createStore } from 'redux'
@@ -33,7 +35,7 @@ const TabNavigatorConfig = {
   tabBarOptions: {
     activeTintColor: Platform.OS === "ios" ? purple : white,
     style: {
-      height: 56,
+      height: 80,
       backgroundColor: Platform.OS === "ios" ? white : purple,
       shadowColor: "rgba(0, 0, 0, 0.24)",
       shadowOffset: {
@@ -58,35 +60,25 @@ const TabNav = () =>(
 )
 
 
-// export default function App() {
-//   return (
-//     <View style={styles.container}>
-//       {/* <Text>Open up App.js to start working on your app!</Text> */}
-//       <StatusBar style="auto" />
-//       <NavigationContainer >
-//         <TabNav />
-//       </NavigationContainer>
-//     </View>
-//   );
-// }
+
 
 export default class App extends React.Component{
   render(){
     const store = createStore(reducer)
     return(
       <Provider store={store}>
-        <View style={{flex:1}}>
-        {/* <UdaciStatusBar backgroundColor={purple} barStyle='light-content' /> */}
-        <StatusBar style="auto" />
-          <NavigationContainer >
-            <TabNav />
-          </NavigationContainer>
-        </View>
-      </Provider>    
+        <SafeAreaProvider>
+          <SafeAreaView style={{flex:1}}>
+            <StatusBar translucent style="auto" />
+            <NavigationContainer >
+              <TabNav />
+            </NavigationContainer>
+          </SafeAreaView>
+        </SafeAreaProvider>
+      </Provider>
     )
   }
 }
-
 
 const styles = StyleSheet.create({
   container: {
