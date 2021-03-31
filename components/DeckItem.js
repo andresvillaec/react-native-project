@@ -79,8 +79,7 @@ const styles = StyleSheet.create({
   secondaryButton: {
     textAlign: 'center',
     backgroundColor: white,
-    color:black
-
+    color:black,
   }
 
 });

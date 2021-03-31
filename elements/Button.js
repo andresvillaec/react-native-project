@@ -15,8 +15,8 @@ export default function SubmitBtn ({ onPress, Name, customStyles }) {
 const styles = StyleSheet.create({
   iosSubmitBtn: {
     backgroundColor: purple,
-    padding: 10,
-    borderRadius: 1,
+    padding: 5,
+    borderRadius: 3,
     height: 45,
     marginLeft: 40,
     marginRight: 40,
@@ -38,7 +38,8 @@ const styles = StyleSheet.create({
   },
   submitBtnText: {
     color: white,
-    fontSize: 22,
+    height:35,
+    fontSize: 24,
     textAlign: 'center',
   },
 });

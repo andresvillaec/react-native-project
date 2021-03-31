@@ -15,6 +15,12 @@ export default class AddCard extends Component {
     this.setState({answer: text})
   }
 
+  addCard = () => {
+    const {navigation, dispatch} = this.props
+    //TODO: Add to store
+    navigation.goBack()
+  }
+
   render() {
     const {question, answer} = this.state
 
