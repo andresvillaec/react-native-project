@@ -3,6 +3,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Platform} from 'react-native';
 import CreateDeck from './components/CreateDeck'
 import DeckList from './components/DeckList'
+import DeckItem from './components/DeckItem'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -78,6 +79,16 @@ const StackConfig = {
     component: TabNav,
     options: {headerShown: false}
   }, 
+  DeckItem:{
+    name: "DeckItem",
+    component: DeckItem,
+    options: {
+      headerTintColor: white,
+      headerStyle:{
+        backgroundColor: purple
+      }
+    }
+  },
   CreateDeck:{
     name: "CreateDeck",
     component: CreateDeck,
@@ -93,6 +104,7 @@ const Stack = createStackNavigator();
 const MainNav = () =>(
   <Stack.Navigator {...StackNavigatorConfig}>
     <Stack.Screen {...StackConfig['TabNav']} />
+    <Stack.Screen {...StackConfig['DeckItem']} />
     <Stack.Screen {...StackConfig['CreateDeck']} />
   </Stack.Navigator>
 )
