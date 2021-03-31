@@ -6,14 +6,23 @@ import DeckList from './components/DeckList'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import SafeAreaView from 'react-native-safe-area-view';
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { white, purple } from './utils/colors'
+import Constants from 'expo-constants'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducers'
 
+function CustomStatusBar ({backgroundColor, ...props}){
+  return (
+    <View style={{backgroundColor, height: Constants.statusBarHeight}}>
+      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+    </View>
+  )
+}
 // Config for TabNav
 const RouteConfigs = {
   DeckList:{
@@ -59,22 +68,44 @@ const TabNav = () =>(
   </Tab.Navigator>
 )
 
-
-
+// Config for StackNav
+const StackNavigatorConfig = {
+  headerMode: "screen"
+}
+const StackConfig = {
+  TabNav:{
+    name: "Home",
+    component: TabNav,
+    options: {headerShown: false}
+  }, 
+  CreateDeck:{
+    name: "CreateDeck",
+    component: CreateDeck,
+    options: {
+      headerTintColor: white,
+      headerStyle:{
+        backgroundColor: purple
+      }
+    }
+  }
+}
+const Stack = createStackNavigator();
+const MainNav = () =>(
+  <Stack.Navigator {...StackNavigatorConfig}>
+    <Stack.Screen {...StackConfig['TabNav']} />
+    <Stack.Screen {...StackConfig['CreateDeck']} />
+  </Stack.Navigator>
+)
 
 export default class App extends React.Component{
   render(){
     const store = createStore(reducer)
     return(
       <Provider store={store}>
-        <SafeAreaProvider>
-          <SafeAreaView style={{flex:1}}>
-            <StatusBar translucent style="auto" />
-            <NavigationContainer >
-              <TabNav />
-            </NavigationContainer>
-          </SafeAreaView>
-        </SafeAreaProvider>
+        <CustomStatusBar backgroundColor={purple} barStyle='light-content' />
+        <NavigationContainer >
+          <MainNav />
+        </NavigationContainer>
       </Provider>
     )
   }
@@ -83,7 +114,7 @@ export default class App extends React.Component{
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: purple,
     alignItems: 'center',
     justifyContent: 'center',
   },
