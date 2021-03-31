@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { white, purple } from '../utils/colors'
 import {handleCreateDeck} from '../actions/deck'
+import Button from '../elements/Button'
 
 function mapStateToProps(state) {
   return {
@@ -11,28 +12,17 @@ function mapStateToProps(state) {
   };
 }
 
-function SubmitBtn ({ onPress }) {
-  return (
-    <TouchableOpacity
-      style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn}
-      onPress={onPress}>
-        <Text style={styles.submitBtnText}>Create Deck</Text>
-    </TouchableOpacity>
-  )
-}
-
 class CreateDeck extends Component {
   state = {
     title: ''
   }
 
-  submit = (e) => {
+  submit = () => {
     const {title} = this.state
     const {navigation, dispatch} = this.props
     console.log(this.props)
     dispatch(handleCreateDeck(title))
     navigation.goBack()
-    
   }
 
   render() {
@@ -53,7 +43,7 @@ class CreateDeck extends Component {
           />
         </View> 
         <View style={styles.box}>
-          <SubmitBtn onPress={this.submit} />
+          <Button onPress={this.submit} Name='Create Deck' />
         </View>
       </View>
     );
