@@ -3,7 +3,7 @@ export const CREATE_DECK = 'CREATE_DECK'
 export const DELETE_DECK = 'DELETE_DECK'
 import {saveDeck, getDecks} from '../utils/api'
 
-function loadDecks (decks) {
+export function loadDecks (decks) {
   return {
     type: GET_DECKS,
     decks,
