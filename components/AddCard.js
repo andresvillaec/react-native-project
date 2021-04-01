@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
-import { View, StyleSheet} from 'react-native'
+import { connect } from 'react-redux';
+import { View, StyleSheet, Text} from 'react-native'
 import TextInput from '../elements/TextInput'
 import SubmitButton from '../elements/SubmitButton'
+import { gray } from '../utils/colors'
+import {handleAddCard} from '../actions/deck'
 
-export default class AddCard extends Component {
+class AddCard extends Component {
   state = {
     question: '',
     answer: ''
@@ -16,16 +19,27 @@ export default class AddCard extends Component {
   }
 
   addCard = () => {
-    const {navigation, dispatch} = this.props
-    //TODO: Add to store
+    const {navigation, dispatch, route} = this.props
+    console.log(this.props)
+    const {title} = route.params
+    const card = {
+      question: this.state.question,
+      answer: this.state.answer
+    };
+
+    dispatch(handleAddCard(title, card))
+    this.setState({ question: '', answer: '' });
     navigation.goBack()
   }
 
   render() {
     const {question, answer} = this.state
+    const {navigation, dispatch, route} = this.props
+    const {title} = route.params
 
     return (
       <View style={styles.container}>
+        <Text style={styles.subtitleText}>Deck: {title}</Text>
         <TextInput 
           placeholder = 'Question'
           onChangeText ={this.onChangeTextQuestion}
@@ -52,4 +66,17 @@ const styles = StyleSheet.create({
     padding:50,
     justifyContent: 'center',
   },
+  subtitleText: {
+    color: gray,
+    fontSize: 24,
+    textAlign: 'center',
+    marginBottom: 45,
+  },
 });
+
+function mapStateToProps() {
+  return {
+  };
+}
+
+export default connect(mapStateToProps)(AddCard);

@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
 import { View, Text, StyleSheet } from 'react-native'
 import { gray, black, white, red } from '../utils/colors'
 import SubmitButton from '../elements/SubmitButton'
 
-export default class DeckItem extends Component {
+class DeckItem extends Component {
   addCard = () => {
     this.props.navigation.navigate("AddCard", {
       title: this.props.route.params.title,
@@ -23,13 +24,14 @@ export default class DeckItem extends Component {
   }
 
   render() {
-    const {route} = this.props
+    const {route, decks} = this.props
     const {title, questionsNumbers} = route.params
+    const deck = decks[title]
 
     return (
       <View style={styles.container}>
         <Text style={styles.titleText}>{title}</Text>
-        <Text style={styles.subtitleText}>{questionsNumbers} cards</Text>
+        <Text style={styles.subtitleText}>{deck.questions.length} cards</Text>
         <SubmitButton customStyles={styles.secondaryButton} onPress={this.addCard} Name='Add Card' />
         <SubmitButton onPress={this.startQuiz} Name='Start Quiz' />
         <SubmitButton customStyles={styles.secondaryButton} onPress={this.deleteDeck} Name='Delete deck' />
@@ -65,6 +67,13 @@ const styles = StyleSheet.create({
     color:red,
     marginTop: 50,
   }
-
 });
+
+function mapStateToProps(decks) {
+  return {
+    decks
+  };
+}
+
+export default connect(mapStateToProps)(DeckItem);
 
