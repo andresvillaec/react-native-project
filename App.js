@@ -1,21 +1,31 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { View} from 'react-native';
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import middleware from './middleware'
+import reducer from './reducers'
+import Navigation from './components/Navigation'
+import { purple } from './utils/colors'
+import Constants from 'expo-constants'
 
-export default function App() {
+function CustomStatusBar ({backgroundColor, ...props}){
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={{backgroundColor, height: Constants.statusBarHeight}}>
+      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
     </View>
-  );
+  )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default class App extends React.Component{
+
+  render(){
+    const store = createStore(reducer, middleware)
+    return(
+      <Provider store={store}>
+        <CustomStatusBar backgroundColor={purple} barStyle='light-content' />
+        <Navigation/>
+      </Provider>
+    )
+  }
+}
