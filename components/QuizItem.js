@@ -8,21 +8,34 @@ export class QuizItem extends Component {
   state = {
     alert : 'Answer', 
     currentCard: 1,
-    correctAnswers: 1,
+    correctAnswers: 0,
     responses: 0,
+    showAnswer: false,
   }
 
   correctAnswer = () => {
     this.setState({ 
-      currentCard: currentCard + 1,
-      responses: responses + 1,
-
+      currentCard: this.state.currentCard + 1,
+      responses: this.state.responses + 1,
+      correctAnswers: this.state.correctAnswers + 1
     });
   }
 
+  incorrectAnswer = () => {
+    this.setState({ 
+      currentCard: this.state.currentCard + 1,
+      responses: this.state.responses + 1,
+    });
+  }
+
+  toggleAnswer = () => {
+    this.setState({ 
+      showAnswer: !this.state.showAnswer 
+    });
+  }
   render() {
     const {decks, route} = this.props
-    const {currentCard} = this.state
+    const {currentCard, responses, correctAnswers, showAnswer} = this.state
     const {title} = route.params
     const deck = decks ? decks[title] : null
 
@@ -36,9 +49,20 @@ export class QuizItem extends Component {
         </View>)
     }
 
+    const totalCards = deck.questions.length
+
+    if (responses === totalCards) {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.title}>
+            Resultado {correctAnswers}/{totalCards}
+          </Text>
+        </View>)
+    }
+
     const index = currentCard - 1
     const {question, answer} = deck.questions[index]
-    const totalCards = deck.questions.length + 1
+    const answerTextButton = !showAnswer ? 'Show Answer' : 'Show Question'
 
     return (
       <View style={styles.container}>
@@ -46,15 +70,19 @@ export class QuizItem extends Component {
           {currentCard}/{totalCards}
         </Text>
         <View style={styles.box}>
-          <Text style={styles.title}>
-            {question}
-          </Text>
-          <Text style={styles.alert}>
-            {alert}
-          </Text>
+          {showAnswer ?
+            <Text style={styles.title}>
+              {answer}
+            </Text>
+            : 
+            <Text style={styles.title}>
+              {question}
+            </Text>
+          }
         </View>
-          <SubmitButton onPress={this.submit} Name='Correct' />
-          <SubmitButton onPress={this.submit} Name='Incorrect' />
+          <SubmitButton onPress={this.toggleAnswer} Name={answerTextButton} />
+          <SubmitButton onPress={this.correctAnswer} Name='Correct' />
+          <SubmitButton onPress={this.incorrectAnswer} Name='Incorrect' />
       </View>
     )
   }
