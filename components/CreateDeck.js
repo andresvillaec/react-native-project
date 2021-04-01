@@ -20,7 +20,6 @@ class CreateDeck extends Component {
   submit = () => {
     const {title} = this.state
     const {navigation, dispatch} = this.props
-    console.log(this.props)
     dispatch(handleCreateDeck(title))
     navigation.goBack()
   }

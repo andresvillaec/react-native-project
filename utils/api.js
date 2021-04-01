@@ -1,4 +1,57 @@
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const STORAGE_DECKS_KEY = 'mobile-cards: decks';
+
+const decks = {
+	React: {
+		title: 'React',
+		questions: [
+			{
+				question: 'What is React?',
+				answer: 'A library for managing user interfaces',
+				correctAnswer: false,
+			},
+			{
+				question: 'Where do you make Ajax requests in React?',
+				answer: 'The componentDidMount lifecycle event',
+				correctAnswer: true,
+			},
+		],
+	},
+	JavaScript: {
+		title: 'JavaScript',
+		questions: [
+			{
+				question: 'What is a closure?',
+				answer:
+					'The combination of a function and the lexical environment within which that function was declared.',
+				correctAnswer: true,
+			},
+		],
+	},
+};
+
+export const _getData = async () => {
+	try {
+		const data = await AsyncStorage.getItem(STORAGE_DECKS_KEY)
+		if(data === null) {
+			AsyncStorage.setItem(STORAGE_DECKS_KEY, JSON.stringify(decks))
+		}
+		return data === null ? decks : JSON.parse(data)
+	} catch (error) {
+		console.log('_getData error ', error);
+	}
+};
+
+
+removeValue = async (id) => {
+  try {
+    await AsyncStorage.removeItem(id)
+  } catch(e) {
+    // remove error
+  }
+
+  console.log('Done.')
+}
 
 export function getDecks() {
     return AsyncStorage.getAllKeys().then(keys => {
@@ -23,6 +76,10 @@ export function getDecks() {
 
 export function getDeck(id) {
     return AsyncStorage.getItem(id);
+}
+
+export function deleteDeck(id) {
+  return removeValue(id);
 }
 
 export function saveDeck(title) {
@@ -52,3 +109,4 @@ export function addCard(title, card) {
         console.log(error);
     }
 }
+

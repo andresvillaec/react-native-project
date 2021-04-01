@@ -9,7 +9,6 @@ function decks (state = {}, action) {
       }
     case CREATE_DECK :
       const { title } = action;
-      console.log(state)
       return {
         ...state,
         [title]: {
