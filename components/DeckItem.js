@@ -6,14 +6,14 @@ import SubmitButton from '../elements/SubmitButton'
 export default class DeckItem extends Component {
   addCard = () => {
     this.props.navigation.navigate("AddCard", {
-      title: 'React',
+      title: this.props.route.params.title,
       navigation: this.props.navigation
     });
   }
 
   startQuiz = () => {
     this.props.navigation.navigate("QuizItem", {
-      title: 'React',
+      title: this.props.route.params.title,
       navigation: this.props.navigation
     });
   }

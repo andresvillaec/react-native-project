@@ -6,13 +6,17 @@ import SubmitButton from '../elements/SubmitButton'
 
 export class QuizItem extends Component {
   state = {
-    alert : 'Answer'
+    alert : 'Answer', 
+    index: 0,
   }
 
   render() {
-    const {quiz} = this.props
-    const {alert} = this.state
-    const {question, answer} = quiz
+    const {decks, route} = this.props
+    const {index} = this.state
+    const {title} = route.params
+    const deck = decks[title]
+   
+    const {question, answer} = deck.questions[index]
 
     return (
       <View style={styles.container}>
@@ -63,19 +67,10 @@ const styles = StyleSheet.create({
   },
 });
 
-function mapStateToProps (state) {
-  var quiz = {
-    question: 'What is React?',
-    answer: 'A library for managing user interfaces'
-  }
-
+function mapStateToProps(decks) {
+  console.log(decks)
   return {
-    quiz
-  }
+    decks,
+  };
 }
-
-const mapDispatchToProps = {
-  
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(QuizItem)
+export default connect(mapStateToProps)(QuizItem)
