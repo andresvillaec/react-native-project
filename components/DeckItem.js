@@ -4,6 +4,7 @@ import { View, Text, StyleSheet } from 'react-native'
 import { gray, black, white, red } from '../utils/colors'
 import SubmitButton from '../elements/SubmitButton'
 import {handleDeleteCard} from '../actions/deck'
+import { clearLocalNotification, setLocalNotification } from "../utils/reminderNotification";
 
 class DeckItem extends Component {
   addCard = () => {
@@ -18,6 +19,9 @@ class DeckItem extends Component {
       title: this.props.route.params.title,
       navigation: this.props.navigation
     });
+
+    clearLocalNotification()
+    .then(setLocalNotification)
   }
 
   deleteDeck = () => {

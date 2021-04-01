@@ -9,6 +9,7 @@ import Navigation from './components/Navigation'
 import { purple } from './utils/colors'
 import Constants from 'expo-constants'
 import { handleInitialData } from './actions/deck';
+import {setLocalNotification} from './utils/reminderNotification'
 
 const store = createStore(reducer, middleware)
 
@@ -22,7 +23,8 @@ function CustomStatusBar ({backgroundColor, ...props}){
 
 export default class App extends React.Component{
   componentDidMount() {
-		store.dispatch(handleInitialData());
+    store.dispatch(handleInitialData());
+    setLocalNotification()
 	}
   render(){
     return(
