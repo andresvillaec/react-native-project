@@ -30,7 +30,7 @@ const decks = {
 	},
 };
 
-export const _getData = async () => {
+export const loadInitialData = async () => {
 	try {
 		const data = await AsyncStorage.getItem(STORAGE_DECKS_KEY)
 		if(data === null) {
