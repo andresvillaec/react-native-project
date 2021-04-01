@@ -33,7 +33,7 @@ const decks = {
 export const loadInitialData = async () => {
 	try {
 		const data = await AsyncStorage.getItem(STORAGE_DECKS_KEY)
-		if(data === null || data.length === 0) {
+		if(data === null) {
 			AsyncStorage.setItem(STORAGE_DECKS_KEY, JSON.stringify(decks))
 		}
 		return data === null ? decks : JSON.parse(data)
