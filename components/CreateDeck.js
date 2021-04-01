@@ -21,6 +21,7 @@ class CreateDeck extends Component {
     const {title} = this.state
     const {navigation, dispatch} = this.props
     dispatch(handleCreateDeck(title))
+    this.setState({ title: ''});
     navigation.goBack()
   }
 

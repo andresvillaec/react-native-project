@@ -1,4 +1,4 @@
-import { GET_DECKS, CREATE_DECK, ADD_CARD } from '../actions/deck'
+import { GET_DECKS, CREATE_DECK, DELETE_DECK, ADD_CARD } from '../actions/deck'
 
 function decks (state = {}, action) {
   switch (action.type) {
@@ -25,7 +25,12 @@ function decks (state = {}, action) {
 					...state[action.title],
 					questions: [...state[action.title].questions, { question, answer, correctAnswer }],
 				},
-			};
+      };
+    case DELETE_DECK:
+      delete state[action.id];
+      return {
+        ...state
+      };
     default :
       return state
   }

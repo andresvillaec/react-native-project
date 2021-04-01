@@ -3,7 +3,7 @@ export const CREATE_DECK = 'CREATE_DECK'
 export const DELETE_DECK = 'DELETE_DECK'
 export const ADD_CARD = 'ADD_CARD'
 
-import {saveDeck, loadInitialData, _addCard} from '../utils/api'
+import {saveDeck, loadInitialData, _addCard, _removeDeck} from '../utils/api'
 
 export function loadDecks (decks) {
   return {
@@ -53,8 +53,19 @@ export function handleInitialData() {
 export function handleAddCard(title, card) {
 	return (dispatch) => {
     return _addCard(title, card)
-    .then((decks) => {
+    .then(() => {
 			dispatch(addCard(title, card));
 		});
 	};
 }
+
+
+export function handleDeleteCard(id) {
+	return (dispatch) => {
+    return _removeDeck(id)
+    .then(() => {
+			dispatch(deleteDeck(id));
+		});
+	};
+}
+

@@ -14,8 +14,17 @@ export class QuizItem extends Component {
     const {decks, route} = this.props
     const {index} = this.state
     const {title} = route.params
-    const deck = decks[title]
-   
+    const deck = decks ? decks[title] : null
+    
+    if (deck === null || deck.questions.length  === 0) {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.title}>
+            Sorry, you cannot take a quiz because there are no cards in the deck
+          </Text>
+        </View>)
+    }
+
     const {question, answer} = deck.questions[index]
 
     return (

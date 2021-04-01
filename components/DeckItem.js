@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { View, Text, StyleSheet } from 'react-native'
 import { gray, black, white, red } from '../utils/colors'
 import SubmitButton from '../elements/SubmitButton'
+import {handleDeleteCard} from '../actions/deck'
 
 class DeckItem extends Component {
   addCard = () => {
@@ -20,18 +21,23 @@ class DeckItem extends Component {
   }
 
   deleteDeck = () => {
-    //TODO: Delete deck
+    const {title} = this.props.route.params
+    const {navigation, dispatch} = this.props
+    dispatch(handleDeleteCard(title)).then(() => {
+			navigation.goBack()
+		});
   }
 
   render() {
     const {route, decks} = this.props
-    const {title, questionsNumbers} = route.params
-    const deck = decks[title]
+    const {title} = route.params
+    const deck = decks ? decks[title] : null
+    const questions = deck ? deck.questions : []
 
     return (
       <View style={styles.container}>
         <Text style={styles.titleText}>{title}</Text>
-        <Text style={styles.subtitleText}>{deck.questions.length} cards</Text>
+        <Text style={styles.subtitleText}>{questions.length} cards</Text>
         <SubmitButton customStyles={styles.secondaryButton} onPress={this.addCard} Name='Add Card' />
         <SubmitButton onPress={this.startQuiz} Name='Start Quiz' />
         <SubmitButton customStyles={styles.secondaryButton} onPress={this.deleteDeck} Name='Delete deck' />

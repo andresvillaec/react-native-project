@@ -33,7 +33,7 @@ const decks = {
 export const loadInitialData = async () => {
 	try {
 		const data = await AsyncStorage.getItem(STORAGE_DECKS_KEY)
-		if(data === null) {
+		if(data === null || data.length === 0) {
 			AsyncStorage.setItem(STORAGE_DECKS_KEY, JSON.stringify(decks))
 		}
 		return data === null ? decks : JSON.parse(data)
@@ -118,4 +118,16 @@ export const _addCard = async (title, card) => {
 		console.log('_addCardToDeck error ', error);
 	}
 };
+
+export async function _removeDeck(id) {
+  const results = await AsyncStorage.getItem(STORAGE_DECKS_KEY);
+  if (results) {
+    const data = JSON.parse(results);
+    delete data[id];
+
+    await AsyncStorage.setItem(STORAGE_DECKS_KEY, JSON.stringify(data));
+    return data;
+  }
+  return {};
+}
 
