@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { View, Text, StyleSheet} from 'react-native'
-import { white, purple, red } from '../utils/colors'
+import { white, purple, red, black} from '../utils/colors'
 import SubmitButton from '../elements/SubmitButton'
 
 export class QuizItem extends Component {
   state = {
-    alert : 'Answer', 
     currentCard: 1,
     correctAnswers: 0,
     responses: 0,
@@ -17,7 +16,8 @@ export class QuizItem extends Component {
     this.setState({ 
       currentCard: this.state.currentCard + 1,
       responses: this.state.responses + 1,
-      correctAnswers: this.state.correctAnswers + 1
+      correctAnswers: this.state.correctAnswers + 1,
+      showAnswer: false,
     });
   }
 
@@ -25,6 +25,7 @@ export class QuizItem extends Component {
     this.setState({ 
       currentCard: this.state.currentCard + 1,
       responses: this.state.responses + 1,
+      showAnswer: false,
     });
   }
 
@@ -33,6 +34,21 @@ export class QuizItem extends Component {
       showAnswer: !this.state.showAnswer 
     });
   }
+
+  restartQuiz = () => {
+    this.setState({ 
+      currentCard: 1,
+      correctAnswers: 0,
+      responses: 0,
+      showAnswer: false,
+    });
+  }
+
+  goToDeck = () => {
+    const {navigation} = this.props
+    navigation.goBack()
+  }
+
   render() {
     const {decks, route} = this.props
     const {currentCard, responses, correctAnswers, showAnswer} = this.state
@@ -57,6 +73,8 @@ export class QuizItem extends Component {
           <Text style={styles.title}>
             Resultado {correctAnswers}/{totalCards}
           </Text>
+          <SubmitButton onPress={this.restartQuiz} Name="Restart Quiz" customStyles={styles.secondaryButton} />
+          <SubmitButton onPress={this.goToDeck} Name='Back to Deck' />
         </View>)
     }
 
@@ -80,7 +98,7 @@ export class QuizItem extends Component {
             </Text>
           }
         </View>
-          <SubmitButton onPress={this.toggleAnswer} Name={answerTextButton} />
+          <SubmitButton onPress={this.toggleAnswer} Name={answerTextButton} customStyles={styles.secondaryButton} />
           <SubmitButton onPress={this.correctAnswer} Name='Correct' />
           <SubmitButton onPress={this.incorrectAnswer} Name='Incorrect' />
       </View>
@@ -107,6 +125,11 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     color: red,
+  },
+  secondaryButton: {
+    textAlign: 'center',
+    backgroundColor: white,
+    color:black,
   },
   input: {
     borderWidth: 1,
