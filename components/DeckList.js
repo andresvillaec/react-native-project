@@ -1,23 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
 import { SafeAreaView, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import {getDecks} from '../utils/api'
 
-export default class DeckList extends Component {
-  state = {
-    decks: {}
-  };
-
-  loadDecks = async () => {
-      this.setState({decks: await getDecks()})
-  }
-
-  componentDidMount() {
-      this.loadDecks();
-      this.props.navigation.addListener('focus', () => {
-          this.loadDecks();
-      });
-  }
-
+class DeckList extends Component {
   submit = (deck) => {
     this.props.navigation.navigate("DeckItem", {
       title: deck.title,
@@ -27,7 +13,7 @@ export default class DeckList extends Component {
   }
 
   render() {
-    const {decks} = this.state
+    const {decks} = this.props
 
     return (
       <SafeAreaView style={styles.container}>
@@ -71,3 +57,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
+function mapStateToProps(decks) {
+  return {
+    decks
+  };
+}
+
+export default connect(mapStateToProps)(DeckList);

@@ -137,7 +137,6 @@ const MainNav = () =>(
 
 class Navigation extends Component {
   render() {
-    console.log(this.props)
     return (
       <NavigationContainer >
         <MainNav />

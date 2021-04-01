@@ -8,6 +8,9 @@ import reducer from './reducers'
 import Navigation from './components/Navigation'
 import { purple } from './utils/colors'
 import Constants from 'expo-constants'
+import { handleInitialData } from './actions/deck';
+
+const store = createStore(reducer, middleware)
 
 function CustomStatusBar ({backgroundColor, ...props}){
   return (
@@ -18,9 +21,10 @@ function CustomStatusBar ({backgroundColor, ...props}){
 }
 
 export default class App extends React.Component{
-
+  componentDidMount() {
+		store.dispatch(handleInitialData());
+	}
   render(){
-    const store = createStore(reducer, middleware)
     return(
       <Provider store={store}>
         <CustomStatusBar backgroundColor={purple} barStyle='light-content' />
