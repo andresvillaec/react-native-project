@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Button } from 'react-native'
-import { connect } from 'react-redux'
+import { View, Text, StyleSheet } from 'react-native'
 import { gray, black, white, red } from '../utils/colors'
 import SubmitButton from '../elements/SubmitButton'
 
-export class DeckItem extends Component {
+export default class DeckItem extends Component {
   addCard = () => {
     this.props.navigation.navigate("AddCard", {
       title: 'React',
@@ -24,14 +23,13 @@ export class DeckItem extends Component {
   }
 
   render() {
-    // console.log(this.props)
-    const {route, deck} = this.props
-    const {title} = route && route.params ? route.params : ''
+    const {route} = this.props
+    const {title, questionsNumbers} = route.params
 
     return (
       <View style={styles.container}>
-        <Text style={styles.titleText}>{deck.title}</Text>
-        <Text style={styles.subtitleText}>{deck.questions.length} cards</Text>
+        <Text style={styles.titleText}>{title}</Text>
+        <Text style={styles.subtitleText}>{questionsNumbers} cards</Text>
         <SubmitButton customStyles={styles.secondaryButton} onPress={this.addCard} Name='Add Card' />
         <SubmitButton onPress={this.startQuiz} Name='Start Quiz' />
         <SubmitButton customStyles={styles.secondaryButton} onPress={this.deleteDeck} Name='Delete deck' />
@@ -40,27 +38,6 @@ export class DeckItem extends Component {
   }
 }
 
-function mapStateToProps (state) {
-
-  //TODO: Get from api
-  var tempDeck = {
-    title: 'React',
-    questions: [
-        {
-            question: 'What is React?',
-            answer: 'A library for managing user interfaces'
-        },
-        {
-            question: 'Where do you make Ajax requests in React?',
-            answer: 'The componentDidMount lifecycle event'
-        }
-    ]
-  }
-
-  return {
-    deck: tempDeck
-  }
-}
 
 const styles = StyleSheet.create({
   container: {
@@ -91,4 +68,3 @@ const styles = StyleSheet.create({
 
 });
 
-export default connect(mapStateToProps)(DeckItem)

@@ -1,7 +1,7 @@
 export const GET_DECKS = 'GET_DECKS'
 export const CREATE_DECK = 'CREATE_DECK'
 export const DELETE_DECK = 'DELETE_DECK'
-import {saveDeck, getDecks} from '../utils/api'
+import {saveDeck, getDeck} from '../utils/api'
 
 export function loadDecks (decks) {
   return {
@@ -28,5 +28,11 @@ export function handleCreateDeck (title) {
   return (dispatch) => {
     return saveDeck(title)
       .then(() => dispatch(createDecks(title)))
+  }
+}
+
+export function handleGetDeck (title) {
+  return (dispatch) => {
+    return getDeck(title)
   }
 }

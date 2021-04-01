@@ -21,14 +21,13 @@ export default class DeckList extends Component {
   submit = (deck) => {
     this.props.navigation.navigate("DeckItem", {
       title: deck.title,
+      questionsNumbers: deck.questions.length,
       navigation: this.props.navigation
     });
   }
 
   render() {
     const {decks} = this.state
-    console.log(decks)
-    console.log(this.props)
 
     return (
       <SafeAreaView style={styles.container}>
