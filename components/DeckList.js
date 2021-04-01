@@ -1,39 +1,23 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import {loadInitialDecks} from '../utils/api'
+import { SafeAreaView, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import {getDecks} from '../utils/api'
 
-function mapStateToProps({decks}) {
-  return {
-    loadInitialDecks,
-    decks : {
-      React: {
-          title: 'React',
-          questions: [
-              {
-                  question: 'What is React?',
-                  answer: 'A library for managing user interfaces'
-              },
-              {
-                  question: 'Where do you make Ajax requests in React?',
-                  answer: 'The componentDidMount lifecycle event'
-              }
-          ]
-      },
-      JavaScript: {
-          title: 'JavaScript',
-          questions: [
-              {
-                  question: 'What is a closure?',
-                  answer: 'The combination of a function and the lexical environment within which that function was declared.'
-              }
-          ]
-      }
-  }
+export default class DeckList extends Component {
+  state = {
+    decks: {}
   };
-}
 
-class DeckList extends Component {
+  loadDecks = async () => {
+      this.setState({decks: await getDecks()})
+  }
+
+  componentDidMount() {
+      this.loadDecks();
+      this.props.navigation.addListener('focus', () => {
+          this.loadDecks();
+      });
+  }
+
   submit = (deck) => {
     this.props.navigation.navigate("DeckItem", {
       title: deck.title,
@@ -41,31 +25,27 @@ class DeckList extends Component {
     });
   }
 
-  componentDidMount() {
-    const { loadInitialDecks } = this.props;
-
-    loadInitialDecks();
-  }
-
   render() {
-    const {decks} = this.props
+    const {decks} = this.state
     console.log(decks)
     console.log(this.props)
 
     return (
-      <View style={styles.container}>
-        {decks &&
-            Object.keys(decks).map(id => (
-              <TouchableOpacity
-                key={id}
-                style={styles.section}
-                onPress={() => this.submit(decks[id])}
-                >
-                  <Text style={styles.submitBtnText}>{decks[id].title}</Text>
-                  <Text style={styles.submitBtnText}>{decks[id].questions.length}</Text>
-              </TouchableOpacity>
-            ))}
-      </View>
+      <SafeAreaView style={styles.container}>
+        <ScrollView>
+          {decks &&
+              Object.keys(decks).map(id => (
+                <TouchableOpacity
+                  key={id}
+                  style={styles.section}
+                  onPress={() => this.submit(decks[id])}
+                  >
+                    <Text style={styles.submitBtnText}>{decks[id].title}</Text>
+                    <Text style={styles.submitBtnText}>{decks[id].questions.length}</Text>
+                </TouchableOpacity>
+              ))}
+        </ScrollView>
+      </SafeAreaView>
       
     );
   }
@@ -92,7 +72,3 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-
-export default connect(
-  mapStateToProps,
-)(DeckList);

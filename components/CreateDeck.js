@@ -43,7 +43,7 @@ class CreateDeck extends Component {
           />
         </View> 
         <View style={styles.box}>
-          <SubmitButton onPress={this.submit} />
+          <SubmitButton onPress={this.submit} Name='Create Deck' />
         </View>
       </View>
     );

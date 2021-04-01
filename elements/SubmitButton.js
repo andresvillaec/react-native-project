@@ -2,10 +2,10 @@ import React from 'react';
 import { Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { white, purple } from '../utils/colors'
 
-export default function SubmitBtn ({ onPress, Name, customStyles }) {
+export default function SubmitBtn ({ onPress, Name, customStyles,  }) {
   return (
     <TouchableOpacity
-      style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn}
+      style={[Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn]}
       onPress={onPress}>
         <Text style={[styles.submitBtnText, customStyles]}>{Name}</Text>
     </TouchableOpacity>
