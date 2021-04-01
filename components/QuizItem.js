@@ -7,14 +7,25 @@ import SubmitButton from '../elements/SubmitButton'
 export class QuizItem extends Component {
   state = {
     alert : 'Answer', 
-    index: 0,
+    currentCard: 1,
+    correctAnswers: 1,
+    responses: 0,
+  }
+
+  correctAnswer = () => {
+    this.setState({ 
+      currentCard: currentCard + 1,
+      responses: responses + 1,
+
+    });
   }
 
   render() {
     const {decks, route} = this.props
-    const {index} = this.state
+    const {currentCard} = this.state
     const {title} = route.params
     const deck = decks ? decks[title] : null
+
     
     if (deck === null || deck.questions.length  === 0) {
       return (
@@ -25,10 +36,15 @@ export class QuizItem extends Component {
         </View>)
     }
 
+    const index = currentCard - 1
     const {question, answer} = deck.questions[index]
+    const totalCards = deck.questions.length + 1
 
     return (
       <View style={styles.container}>
+        <Text style={styles.title}>
+          {currentCard}/{totalCards}
+        </Text>
         <View style={styles.box}>
           <Text style={styles.title}>
             {question}
