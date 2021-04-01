@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
 import CreateDeck from './CreateDeck'
 import DeckList from './DeckList'
 import DeckItem from './DeckItem'
 import AddCard from './AddCard'
-import { connect } from 'react-redux';
+import QuizItem from './QuizItem'
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -101,6 +102,27 @@ const StackConfig = {
       }
     }
   },
+  AddCard:{
+    name: "AddCard",
+    component: AddCard,
+    options: {
+      headerTintColor: white,
+      headerStyle:{
+        backgroundColor: purple
+      }
+    }
+  },
+  QuizItem:{
+    name: "QuizItem",
+    component: QuizItem,
+    options: {
+      title: 'Quiz',
+      headerTintColor: white,
+      headerStyle:{
+        backgroundColor: purple
+      }
+    }
+  },
 }
 const Stack = createStackNavigator();
 const MainNav = () =>(
@@ -109,6 +131,7 @@ const MainNav = () =>(
     <Stack.Screen {...StackConfig['DeckItem']} />
     <Stack.Screen {...StackConfig['CreateDeck']} />
     <Stack.Screen {...StackConfig['AddCard']} />
+    <Stack.Screen {...StackConfig['QuizItem']} />
   </Stack.Navigator>
 )
 

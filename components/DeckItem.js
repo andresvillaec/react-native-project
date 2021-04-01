@@ -13,7 +13,10 @@ export class DeckItem extends Component {
   }
 
   startQuiz = () => {
-    //TODO: Go to quiz
+    this.props.navigation.navigate("QuizItem", {
+      title: 'React',
+      navigation: this.props.navigation
+    });
   }
 
   deleteDeck = () => {
